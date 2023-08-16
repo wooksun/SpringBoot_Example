@@ -20,6 +20,6 @@ public class FirstController {
 	public String seeYouNext(Model model) {
 		model.addAttribute("nickname", "우기");
 		return "goodbye";
-	} // test
+	} 
 	
 }
