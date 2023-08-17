@@ -7,14 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor // 기본생성자
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
+@Slf4j
 public class ArticleForm {
 	
+	private Long id; // id 필드 추가
 	private String title;
 	private String content;
 	
@@ -48,7 +51,10 @@ public class ArticleForm {
 	
 	//	DTO 데이터를 Entity(테이블과 매핑되는 클래스, Article)
 	public Article toEntity() {
-		return new Article(null, title, content);
+		log.info("Entity로 변환");
+		//return new Article(null, title, content);
+		//	추가된 id 필드로 entity를 초기화 할 수 있도록 수정한다.
+		return new Article(id, title, content);
 	}
 	
 }
