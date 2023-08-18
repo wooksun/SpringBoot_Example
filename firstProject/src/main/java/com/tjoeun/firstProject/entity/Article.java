@@ -24,7 +24,7 @@ import lombok.ToString;
 @ToString
 public class Article {
 	
-	//	기본키로 사용할 필드 선언
+	//	기본키로 사용할 필드 선언(PK)
 	//	기본키를 자동으로 생성하려면 @Id와 @GeneratedValue 어노테이션을 함께 사용해야 한다.
 	@Id // 필드를 기본키로 설정한다.
 	//@GeneratedValue // 기본키 값을 자동으로 생성한다.
@@ -35,6 +35,17 @@ public class Article {
 	private String title;
 	@Column
 	private String content;
+	
+	//	넘어오지 않은 데이터를 기존 데이터로 채워주는 메소드
+	public void patch(Article article) {
+		if (article.title != null) {
+			this.title = article.title;
+		}
+		if (article.content != null) {
+			this.content = article.content;
+		}
+	}
+	
 	
 
 	

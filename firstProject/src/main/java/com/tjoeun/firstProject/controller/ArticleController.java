@@ -18,6 +18,7 @@ import com.tjoeun.firstProject.repository.ArticleRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+//	@Controller 어노테이션이 붙어있는 클래스의 메소드는 뷰페이지를 반환한다.
 @Controller
 @Slf4j // 롬복에서 지원하는 로그 어노테이션
 public class ArticleController {
