@@ -57,6 +57,13 @@ public class ArticleService {
 			log.info("잘못된 요청! id: {}, article: {}", id, article.toString());
 			return null;
 		}
+		
+		//	id만 넘어오고 title, content가 null인 경우, null이 넘어오면 null을 리턴하는 코드를 추가한다.
+		if (article.getTitle() == null && article.getContent() == null) {
+			log.info("잘못된 요청! id: {}, article: {}", id, article.toString());
+			return null;
+		}
+		
 		target.patch(article);
 		return articleRepository.save(target);
 	}
