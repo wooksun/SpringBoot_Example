@@ -88,5 +88,36 @@ public class CommentService {
 		//	dto로 변환해서 반환
 		return CommentDto.createCommentDto(created);
 	}
+
+	//	댓글 수정
+	public CommentDto update(Long id, CommentDto dto) {
+		log.info("CommentService의 update() 메소드 실행");
+		log.info("id: " + id);
+		log.info("dto: " + dto);
+		//	수정하려는 댓글이 있으면 얻어오고 없으면 예외를 발생시킨다.
+		Comment comment = commentRepository.findById(id)
+				.orElseThrow(() -> 
+				new IllegalArgumentException("댓글 수정 실패! 대상 댓글이 없습니다."));		
+		//	댓글을 수정하는 메소드를 실행한다.
+		comment.patch(dto);
+		//	수정된 댓글로 다시 저장한다.
+		Comment updated = commentRepository.save(comment);
+		//	수정된 댓글 entity를 dto로 변환해서 반환한다.
+		return CommentDto.createCommentDto(updated);
+	}
+	
+	//	댓글 삭제
+	public CommentDto delete(Long id) {
+		log.info("CommentService의 delete() 메소드 실행");
+//		log.info("id: " + id);
+		//	삭제하려는 댓글이 있으면 얻어오고 없으면 예외를 발생시킨다. 
+		Comment comment = commentRepository.findById(id)
+				.orElseThrow(() -> 
+				new IllegalArgumentException("댓글 삭제 실패! 대상 댓글이 없습니다."));		
+		//	댓글을 삭제하는 메소드를 실행한다.
+		commentRepository.delete(comment);
+		//	삭제한 댓글 entity를 dto로 변환해서 반환한다.
+		return CommentDto.createCommentDto(comment);
+	}
 	
 }

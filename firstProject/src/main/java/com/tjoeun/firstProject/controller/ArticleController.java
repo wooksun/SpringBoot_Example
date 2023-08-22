@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tjoeun.firstProject.dto.ArticleForm;
+import com.tjoeun.firstProject.dto.CommentDto;
 import com.tjoeun.firstProject.entity.Article;
 import com.tjoeun.firstProject.repository.ArticleRepository;
+import com.tjoeun.firstProject.service.CommentService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +28,10 @@ public class ArticleController {
 	//	JPA repository 인터페이스 객체를 선언하고 @Autowired 어노테이션으로 초기화한다.
 	@Autowired // 스프링 부트가 미리 생성해놓은 객체를 가져다가 자동으로 연결한다.
 	private ArticleRepository articleRepository;
+	
+	//	댓글 목록을 가져오기 위해 CommentService의 bean을 가져온다.
+	@Autowired
+	private CommentService commentService;
 	
 	//	글 입력 뷰 페이지 호출
 	@GetMapping("/articles/new")
@@ -73,6 +79,14 @@ public class ArticleController {
 	    // log.info("articleEntity = " + articleEntity);
 	    //	테이블에서 얻어온 데이터를 뷰페이지로 전달하기 위해 Model 인터페이스 객체에 넣어준다.
 	    model.addAttribute("article", articleEntity);
+	    
+	    //	댓글 목록을 얻어온다.
+	    List<CommentDto> commentDtos = commentService.comments(id);
+	    //log.info("commentDtos: " + commentDtos);
+	    
+	    //	얻어온 댓글 목록을 뷰페이지로 전달하기 위해 Model 인터페이스 객체에 넣어준다.
+	    model.addAttribute("commentDtos", commentDtos);
+	    
 	    return "articles/show"; // 뷰페이지를 설정한다.
 	}
 	  
